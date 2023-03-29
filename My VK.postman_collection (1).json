@@ -1,0 +1,774 @@
+{
+	"info": {
+		"_postman_id": "f5559bb9-4f54-470c-a1c5-a9f850e1cd20",
+		"name": "My VK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25026748"
+	},
+	"item": [
+		{
+			"name": "Get USER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/users.get?user_ids={{owner_id}}&fields=bdate&v=5.131 HTTP/1.1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"users.get"
+					],
+					"query": [
+						{
+							"key": "user_ids",
+							"value": "{{owner_id}}"
+						},
+						{
+							"key": "fields",
+							"value": "bdate"
+						},
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"album_id\", jsonData.response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.createAlbum?title=Новый альбом&v=5.131 HTTP/1.1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.createAlbum"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Новый альбом"
+						},
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get server",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"upload_url\", jsonData.response.upload_url);\r",
+							"pm.collectionVariables.set(\"album_id\", jsonData.response.album_id);\r",
+							"console.log(pm.collectionVariables.get(\"upload_url\"));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "https://api.vk.com/method/photos.getUploadServer?album_id={{album_id}}&v=5.131  HTTP/1.1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.getUploadServer"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{access_token}}",
+							"disabled": true
+						},
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						},
+						{
+							"key": "v",
+							"value": "5.131  HTTP/1.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add pic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"server\", jsonData.server);\r",
+							"pm.collectionVariables.set(\"hash\", jsonData.hash);\r",
+							"pm.collectionVariables.set(\"photos_list\", jsonData.photos_list);\r",
+							"pm.collectionVariables.set(\"aid\", jsonData.aid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file1",
+							"type": "file",
+							"src": "/C:/Users/ASUS/Desktop/Проект ВК/Новая папка/Moscow.jpg"
+						},
+						{
+							"key": "file2",
+							"type": "file",
+							"src": "/C:/Users/ASUS/Desktop/Проект ВК/Новая папка/StPeter.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{upload_url}}",
+					"host": [
+						"{{upload_url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save pic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.save?server={{server}}&photos_list={{photos_list}}&album_id={{aid}}&hash={{hash}}&v=5.131 HTTP/1.1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.save"
+					],
+					"query": [
+						{
+							"key": "server",
+							"value": "{{server}}"
+						},
+						{
+							"key": "photos_list",
+							"value": "{{photos_list}}"
+						},
+						{
+							"key": "album_id",
+							"value": "{{aid}}"
+						},
+						{
+							"key": "hash",
+							"value": "{{hash}}"
+						},
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list pic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"file_id_1\", jsonData.response.items[0].id);\r",
+							"pm.collectionVariables.set(\"file_id_2\", jsonData.response.items[1].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.get?album_id={{album_id}}&v=5.131 HTTP/1.1&owner_id={{owner_id}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.get"
+					],
+					"query": [
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						},
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						},
+						{
+							"key": "owner_id",
+							"value": "{{owner_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.createComment?v=5.131 HTTP/1.1&owner_id={{owner_id}}&photo_id={{file_id_1}}&message=ИИ рисует Москву",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.createComment"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						},
+						{
+							"key": "owner_id",
+							"value": "{{owner_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{file_id_1}}"
+						},
+						{
+							"key": "message",
+							"value": "ИИ рисует Москву"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "message 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.createComment?v=5.131 HTTP/1.1&owner_id={{owner_id}}&photo_id={{file_id_2}}&message=ИИ рисует Санкт-Петербург",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.createComment"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						},
+						{
+							"key": "owner_id",
+							"value": "{{owner_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{file_id_2}}"
+						},
+						{
+							"key": "message",
+							"value": "ИИ рисует Санкт-Петербург"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Mess list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"comment_id_1\", jsonData.response.items[0].id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.getComments?v=5.131 HTTP/1.1&owner_id={{owner_id}}&photo_id={{file_id_1}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.getComments"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						},
+						{
+							"key": "owner_id",
+							"value": "{{owner_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{file_id_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New mess 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.editComment?v=5.131 HTTP/1.1&owner_id={{owner_id}}&photo_id={{file_id_1}}&message=ИИ рисует Санкт-Петербург так, что он похож на город за Уралом&comment_id={{comment_id_1}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.editComment"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						},
+						{
+							"key": "owner_id",
+							"value": "{{owner_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{file_id_1}}"
+						},
+						{
+							"key": "message",
+							"value": "ИИ рисует Санкт-Петербург так, что он похож на город за Уралом"
+						},
+						{
+							"key": "comment_id",
+							"value": "{{comment_id_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del pic",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.delete?v=5.131 HTTP/1.1&owner_id={{owner_id}}&photo_id={{file_id_1}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.delete"
+					],
+					"query": [
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						},
+						{
+							"key": "owner_id",
+							"value": "{{owner_id}}"
+						},
+						{
+							"key": "photo_id",
+							"value": "{{file_id_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del album",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"album_id\", jsonData.response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.vk.com/method/photos.deleteAlbum?album_id={{album_id}}&v=5.131 HTTP/1.1",
+					"protocol": "https",
+					"host": [
+						"api",
+						"vk",
+						"com"
+					],
+					"path": [
+						"method",
+						"photos.deleteAlbum"
+					],
+					"query": [
+						{
+							"key": "album_id",
+							"value": "{{album_id}}"
+						},
+						{
+							"key": "v",
+							"value": "5.131 HTTP/1.1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "access_token",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "server",
+			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "photos_list",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "hash",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "aid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "upload_url",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "album_id",
+			"value": ""
+		},
+		{
+			"key": "file_id_1",
+			"value": null,
+			"type": "string"
+		},
+		{
+			"key": "file_id_2",
+			"value": null,
+			"type": "string"
+		},
+		{
+			"key": "comment_id_1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "owner_id",
+			"value": "780246445",
+			"type": "string"
+		}
+	]
+}
